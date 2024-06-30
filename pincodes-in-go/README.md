@@ -1,5 +1,5 @@
 # Introduction
-Go package with embedded csv of Indian pinodes.
+Go package with embedded csv of Indian Pincodes(Zipcodes).
 
 
 ### Install
@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	result, err := pincodes.Load()
+    result, err := pincodes.Load()
 
     fmt.Println(result[110001])
 }

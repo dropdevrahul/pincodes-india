@@ -4,6 +4,7 @@ import (
 	"embed"
 	"encoding/csv"
 	"strconv"
+	"strings"
 )
 
 //go:embed pincode.csv
@@ -21,8 +22,8 @@ type Pincode struct {
 	Delivery     string
 	District     string
 	StateName    string
-	Latitude     float64
-	Longitude    float64
+	Latitude     string
+	Longitude    string
 }
 
 func Load() (map[int]Pincode, error) {
@@ -44,6 +45,7 @@ func Load() (map[int]Pincode, error) {
 		if i == 0 {
 			continue
 		}
+
 		record, err := rowToRecord(row)
 		if err != nil {
 			return nil, err
@@ -61,7 +63,7 @@ func rowToRecord(row []string) (*Pincode, error) {
 		return nil, err
 	}
 
-	return &Pincode{
+	result := &Pincode{
 		CircleName:   row[0],
 		RegionName:   row[1],
 		DivisionName: row[2],
@@ -71,5 +73,9 @@ func rowToRecord(row []string) (*Pincode, error) {
 		Delivery:     row[6],
 		District:     row[7],
 		StateName:    row[8],
-	}, nil
+		Latitude:     strings.TrimSpace(row[9]),
+		Longitude:    strings.TrimSpace(row[10]),
+	}
+
+	return result, nil
 }
